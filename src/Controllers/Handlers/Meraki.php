@@ -44,7 +44,7 @@ class Meraki extends Controller implements Handler
             'client_mac' => $request->session()->get('client_mac'),
         ]);
 
-        $savedWifiUser = \App\WifiUser::create($data);
+        $savedWifiUser = \App\Models\WifiUser::create($data);
 
         if (!$savedWifiUser) {
             dd('Error al registrar usuario');
