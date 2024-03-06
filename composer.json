@@ -1,0 +1,21 @@
+{
+    "name": "netmask/cautiveportal",
+    "description": "Scratch Cautive Portal for Meraki & WLC",
+    "type": "project",
+    "require": {
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Netmask\\CautivePortal\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Netmask\\CautivePortal\\CautivePortalServiceProvider"
+            ]
+        }
+    }
+}
