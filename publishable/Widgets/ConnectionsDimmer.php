@@ -2,7 +2,7 @@
 
 namespace App\Widgets;
 
-use App\WifiUser;
+use App\Models\WifiUser;
 use Illuminate\Support\Str;
 use TCG\Voyager\Widgets\BaseDimmer;
 

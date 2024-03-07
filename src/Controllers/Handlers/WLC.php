@@ -29,7 +29,9 @@ class WLC extends Controller implements Handler
             'redirect' => $request->session()->get('redirect'),
         ]);
 
-        if (!\App\WifiUser::create($data)) {
+        $savedWifiUser = \App\Models\WifiUser::create($data);
+
+        if ($savedWifiUser) {
             dd('Error al registrar usuario');
         }
 
