@@ -3,9 +3,11 @@
 namespace Netmask\CautivePortal\Controllers\Handlers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendMailOTP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Ichtrojan\Otp\Otp;
 
 class Meraki extends Controller implements Handler
 {
@@ -50,7 +52,9 @@ class Meraki extends Controller implements Handler
             dd('Error al registrar usuario');
         }
 
-        Session::put('user', $savedWifiUser);
+        Session::put('email', $savedWifiUser->email);
+        $generatedOtp = (new Otp)->generate($savedWifiUser['email'], 'numeric', 4, 15)->token;
+        \Mail::to($savedWifiUser['email'])->send(new SendMailOTP($generatedOtp, $savedWifiUser['name']));
         return Redirect::route('cautiveportal.validateotp');
     }
 
