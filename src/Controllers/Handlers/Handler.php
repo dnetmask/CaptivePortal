@@ -34,6 +34,6 @@ interface Handler
      * @param Request $request
      * @return Illuminate\Http\Response
      */
-    public function validateOtp(Request $request);
+    public function generateOtp(Request $request);
 
 }
