@@ -55,7 +55,7 @@ class Meraki extends Controller implements Handler
         Session::put('email', $savedWifiUser->email);
         $generatedOtp = (new Otp)->generate($savedWifiUser['email'], 'numeric', 4, 15)->token;
         \Mail::to($savedWifiUser['email'])->send(new SendMailOTP($generatedOtp, $savedWifiUser['name']));
-        return Redirect::route('cautiveportal.generateotp');
+        return Redirect::route('cautiveportal.otpform');
     }
 
     public function afterStore(Request $request)
@@ -88,8 +88,8 @@ class Meraki extends Controller implements Handler
         return view('cautiveportal::success');
     }
 
-    public function generateOtp(Request $request)
+    public function otpForm(Request $request)
     {
-        return view('cautiveportal::generateotp');
+        return view('cautiveportal::otpform');
     }
 }
