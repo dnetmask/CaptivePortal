@@ -36,7 +36,14 @@ class Meraki extends Controller implements Handler
 
     public function store(Request $request)
     {
-        $data = array_merge($request->all(), [
+        $data = [
+            'name' => $request->session()->get('name'),
+            'age' => $request->session()->get('age'),
+            'national_id' => $request->session()->gett('national_id'),
+            'genre' => $request->session()->get('genre'),
+            'mobile_number' =>$request->session()->get('mobile_number'),
+            'email' => $request->session()->get('email'),
+            'neighborhood' => $request->session()->get('neighborhood'),
             'base_grant_url' => $request->session()->get('base_grant_url'),
             'user_continue_url' => $request->session()->get('user_continue_url'),
             'node_id' => $request->session()->get('node_id'),
@@ -44,7 +51,7 @@ class Meraki extends Controller implements Handler
             'gateway_id' => $request->session()->get('gateway_id'),
             'client_ip' => $request->session()->get('client_ip'),
             'client_mac' => $request->session()->get('client_mac'),
-        ]);
+        ];
 
         $savedWifiUser = \App\Models\WifiUser::create($data);
 
@@ -52,10 +59,7 @@ class Meraki extends Controller implements Handler
             dd('Error al registrar usuario');
         }
 
-        Session::put('email', $savedWifiUser->email);
-        $generatedOtp = (new Otp)->generate($savedWifiUser['email'], 'numeric', 4, 15)->token;
-        \Mail::to($savedWifiUser['email'])->send(new SendMailOTP($generatedOtp, $savedWifiUser['name']));
-        return Redirect::route('cautiveportal.otpform');
+        return Redirect::route('cautiveportal.afterstore');
     }
 
     public function afterStore(Request $request)
@@ -90,6 +94,8 @@ class Meraki extends Controller implements Handler
 
     public function otpForm(Request $request)
     {
+        $generatedOtp = (new Otp)->generate(Session::get('email'), 'numeric', 4, 15)->token;
+        \Mail::to(Session::get('email'))->send(new SendMailOTP($generatedOtp, Session::get('name')));
         return view('cautiveportal::otpform');
     }
 }
