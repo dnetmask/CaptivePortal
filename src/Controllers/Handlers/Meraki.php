@@ -4,6 +4,7 @@ namespace Netmask\CautivePortal\Controllers\Handlers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\SendMailOTP;
+use App\Models\WifiUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -39,9 +40,9 @@ class Meraki extends Controller implements Handler
         $data = [
             'name' => $request->session()->get('name'),
             'age' => $request->session()->get('age'),
-            'national_id' => $request->session()->gett('national_id'),
+            'national_id' => $request->session()->get('national_id'),
             'genre' => $request->session()->get('genre'),
-            'mobile_number' =>$request->session()->get('mobile_number'),
+            'mobile_number' => $request->session()->get('mobile_number'),
             'email' => $request->session()->get('email'),
             'neighborhood' => $request->session()->get('neighborhood'),
             'base_grant_url' => $request->session()->get('base_grant_url'),
@@ -53,7 +54,7 @@ class Meraki extends Controller implements Handler
             'client_mac' => $request->session()->get('client_mac'),
         ];
 
-        $savedWifiUser = \App\Models\WifiUser::create($data);
+        $savedWifiUser = WifiUser::create($data);
 
         if (!$savedWifiUser) {
             dd('Error al registrar usuario');
