@@ -17,7 +17,7 @@ interface Handler
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request);
@@ -34,6 +34,4 @@ interface Handler
      * @param Request $request
      * @return Illuminate\Http\Response
      */
-    public function otpForm(Request $request);
-
 }
