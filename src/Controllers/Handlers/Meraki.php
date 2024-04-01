@@ -22,6 +22,7 @@ class Meraki extends Controller implements Handler
             'gateway_id' => $request->get('gateway_id'),
             'client_ip' => $request->get('client_ip'),
             'client_mac' => $request->get('client_mac'),
+            'email_otp_sent' => false,
         ]);
 
         /*
@@ -95,8 +96,11 @@ class Meraki extends Controller implements Handler
 
     public function otpForm(Request $request)
     {
-        $generatedOtp = (new Otp)->generate(Session::get('email'), 'numeric', 4, 15)->token;
-        \Mail::to(Session::get('email'))->send(new SendMailOTP($generatedOtp, Session::get('name')));
+        if (Session::get('email_otp_sent') == false) {
+            $generatedOtp = (new Otp)->generate(Session::get('email'), 'numeric', 4, 15)->token;
+            \Mail::to(Session::get('email'))->send(new SendMailOTP($generatedOtp, Session::get('name')));
+            Session::put('email_otp_sent', true);
+        }
         return view('cautiveportal::otpform');
     }
 }
