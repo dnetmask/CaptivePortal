@@ -2,6 +2,7 @@
 
 
 namespace Netmask\CautivePortal\Controllers\Handlers;
+
 use Netmask\CautivePortal\Models\WifiUser;
 
 use App\Http\Controllers\Controller;
@@ -40,15 +41,15 @@ class WLC extends Controller implements Handler
 
     public function afterStore(Request $request)
     {
-        $switchUrl      = $request->session()->get('switch_url');
-        $redirectUrl    = setting('site.redirect_to');
+        $switchUrl = $request->session()->get('switch_url');
+        $redirectUrl = setting('site.redirect_to');
 
         if (!$redirectUrl) {
             $redirectUrl = route('cautiveportal.success');
         }
 
         if (strlen($redirectUrl) > 255) {
-            $redirectUrl = substr($redirectUrl, 0,255);
+            $redirectUrl = substr($redirectUrl, 0, 255);
         }
 
         if ($switchUrl) {
@@ -66,7 +67,8 @@ class WLC extends Controller implements Handler
         }
     }
 
-    public function success() {
+    public function success()
+    {
         return view('cautiveportal::success');
     }
 }

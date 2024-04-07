@@ -10,6 +10,7 @@ Route::group(['as' => 'cautiveportal.', 'middleware' => ['web']], function () {
     Route::match(['GET', 'POST'], '/otp-form', ['uses' => $namespacePrefix . 'CautivePortalController@otpForm', 'as' => 'otpform']);
     Route::post('/validate-opt', ['uses' => $namespacePrefix . 'CautivePortalController@validateOtp', 'as' => 'validateotp']);
     Route::post('/validate-form', ['uses' => $namespacePrefix . 'CautivePortalController@validateForm', 'as' => 'validateform']);
+    Route::get('/resend-otp-email', ['uses' => $namespacePrefix . 'CautivePortalController@resendOtpEmail', 'as' => 'resendotpemail']);
 
     //Asset Routes
     Route::get('cautiveportal-assets', ['uses' => '\Netmask\CautivePortal\Controllers\\CautivePortalAssetsController@assets', 'as' => 'cautiveportal_assets']);
